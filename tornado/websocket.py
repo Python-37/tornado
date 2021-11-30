@@ -21,38 +21,25 @@ import asyncio
 import base64
 import hashlib
 import os
-import sys
 import struct
+import sys
+import zlib
+from types import TracebackType
+from typing import (TYPE_CHECKING, Any, Awaitable, Callable, Dict, List,
+                    Optional, Tuple, Type, Union, cast)
+from urllib.parse import urlparse
+
 import tornado.escape
 import tornado.web
-from urllib.parse import urlparse
-import zlib
-
+from tornado import gen, httpclient, httputil, simple_httpclient
 from tornado.concurrent import Future, future_set_result_unless_cancelled
-from tornado.escape import utf8, native_str, to_unicode
-from tornado import gen, httpclient, httputil
+from tornado.escape import native_str, to_unicode, utf8
 from tornado.ioloop import IOLoop, PeriodicCallback
-from tornado.iostream import StreamClosedError, IOStream
-from tornado.log import gen_log, app_log
-from tornado import simple_httpclient
+from tornado.iostream import IOStream, StreamClosedError
+from tornado.log import app_log, gen_log
 from tornado.queues import Queue
 from tornado.tcpclient import TCPClient
 from tornado.util import _websocket_mask
-
-from typing import (
-    TYPE_CHECKING,
-    cast,
-    Any,
-    Optional,
-    Dict,
-    Union,
-    List,
-    Awaitable,
-    Callable,
-    Tuple,
-    Type,
-)
-from types import TracebackType
 
 if TYPE_CHECKING:
     from typing_extensions import Protocol
